@@ -9,12 +9,12 @@ const SIZE = 50;
 // o: { title, path, query(showDone)->obj, quick()->extra body | undefined, reorder, empty, doneToggle, doneDefault }
 export function mountTaskView(main, o) {
   let items = [], total = 0, loaded = false, failed = false, alive = true, seq = 0, tmp = 0, curSize = SIZE;
-  let showDone = !!o.doneDefault;
+  let showDone = (() => { try { const v = localStorage.getItem('flowtask.showDone'); return v === '1' ? true : v === '0' ? false : !!o.doneDefault; } catch { return !!o.doneDefault; } })();
   const titleEl = h('h1', { class: 'view-title', tabindex: '-1' }, o.title);
   const countEl = h('span', { class: 'view-count' });
   const controls = h('div', { class: 'view-controls' });
   if (o.doneToggle) {
-    const box = h('input', { type: 'checkbox', checked: showDone, onchange: () => { showDone = box.checked; load(); } });
+    const box = h('input', { type: 'checkbox', checked: showDone, onchange: () => { showDone = box.checked; try { localStorage.setItem('flowtask.showDone', showDone ? '1' : '0'); } catch {} load(); } });
     controls.append(h('label', null, box, '완료 표시'));
   }
   const listEl = h('ul', { class: 'task-list' });
