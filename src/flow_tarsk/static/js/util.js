@@ -33,7 +33,7 @@ export function fmtDue(iso) {
     day = `${d.getMonth() + 1}월 ${d.getDate()}일 (${DAYS[d.getDay()]})`;
     if (d.getFullYear() !== now.getFullYear()) day = `${d.getFullYear()}년 ${day}`;
   }
-  return `${day} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  return `마감 ${day} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
 export const isOverdue = (t) => !!t.due_at && t.status !== 'DONE' && new Date(t.due_at) < new Date();
