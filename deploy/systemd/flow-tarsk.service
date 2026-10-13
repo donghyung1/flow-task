@@ -1,0 +1,27 @@
+[Unit]
+Description=Flow Tarsk task manager (FastAPI)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=flow-tarsk
+Group=flow-tarsk
+# 설정(.env)은 WorkingDirectory 기준으로 앱이 직접 읽고, EnvironmentFile로도 주입됩니다.
+WorkingDirectory=/opt/flow-tarsk
+EnvironmentFile=/opt/flow-tarsk/.env
+ExecStart=/opt/flow-tarsk/.venv/bin/flow-tarsk
+Restart=on-failure
+RestartSec=5
+
+# Hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+
+[Install]
+WantedBy=multi-user.target

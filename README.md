@@ -49,6 +49,25 @@ uv run flow-tarsk
 
 브라우저에서 <http://127.0.0.1:8000/app/today> 를 엽니다.
 
+### systemd 서비스로 실행
+
+`deploy/systemd/flow-tarsk.service`를 사용하면 부팅 시 자동 시작되는 서비스로 실행할 수 있습니다. 유닛 파일의 `User`/`Group`, `WorkingDirectory`, `EnvironmentFile`, `ExecStart` 경로(기본 `/opt/flow-tarsk`)를 실제 환경에 맞게 수정하세요. 의존성 설치(`uv sync`)와 `.env` 설정은 미리 끝나 있어야 합니다.
+
+```bash
+# 시작 전 DB 마이그레이션
+uv run alembic upgrade head
+
+sudo cp deploy/systemd/flow-tarsk.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now flow-tarsk
+
+systemctl status flow-tarsk
+journalctl -u flow-tarsk -f
+curl http://127.0.0.1:8000/health   # HOST/PORT에 맞게 변경
+```
+
+`.venv`의 파이썬이 홈 디렉터리 아래에 있으면 `ProtectHome=true` 때문에 실행되지 않으므로, 서비스 사용자가 접근 가능한 위치에 설치하세요.
+
 ## 환경 변수
 
 | 변수 | 기본값 | 설명 |
