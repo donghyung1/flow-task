@@ -182,7 +182,7 @@
 
 ### 6.3 디렉터리 구조 (안)
 ```
-src/flow_tarsk/
+src/flow_task/
 ├── main.py              # FastAPI 앱 생성, 라우터 등록
 ├── core/                # 설정, 예외 처리
 ├── db/                  # 엔진·세션, Base 모델

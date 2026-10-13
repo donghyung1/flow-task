@@ -5,9 +5,9 @@ from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-from flow_tarsk import models  # noqa: F401
-from flow_tarsk.core.config import get_settings
-from flow_tarsk.db.base import Base
+from flow_task import models  # noqa: F401
+from flow_task.core.config import get_settings
+from flow_task.db.base import Base
 
 config = context.config
 config.set_main_option("sqlalchemy.url", get_settings().database_url.replace("%", "%%"))

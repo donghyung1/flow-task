@@ -6,11 +6,11 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from sqlalchemy.dialects import mysql
 
-from flow_tarsk.api.deps import _tasks
-from flow_tarsk.api.v1.views import router
-from flow_tarsk.core.timeutil import ViewBounds
-from flow_tarsk.repositories.tasks import _conditions
-from flow_tarsk.services.tasks import TaskService
+from flow_task.api.deps import _tasks
+from flow_task.api.v1.views import router
+from flow_task.core.timeutil import ViewBounds
+from flow_task.repositories.tasks import _conditions
+from flow_task.services.tasks import TaskService
 
 NAMES = ("today", "upcoming", "overdue", "inbox")
 NOW = datetime(2026, 1, 1, tzinfo=UTC)

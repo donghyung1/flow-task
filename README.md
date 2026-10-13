@@ -44,25 +44,25 @@ uv run alembic upgrade head
 ### 4. 서버 실행
 
 ```bash
-uv run flow-tarsk
+uv run flow-task
 ```
 
 브라우저에서 <http://127.0.0.1:8000/app/today> 를 엽니다.
 
 ### systemd 서비스로 실행
 
-`deploy/systemd/flow-tarsk.service`를 사용하면 부팅 시 자동 시작되는 서비스로 실행할 수 있습니다. 유닛 파일의 `User`/`Group`, `WorkingDirectory`, `EnvironmentFile`, `ExecStart` 경로(기본 `/opt/flow-tarsk`)를 실제 환경에 맞게 수정하세요. 의존성 설치(`uv sync`)와 `.env` 설정은 미리 끝나 있어야 합니다.
+`deploy/systemd/flow-task.service`를 사용하면 부팅 시 자동 시작되는 서비스로 실행할 수 있습니다. 유닛 파일의 `User`/`Group`, `WorkingDirectory`, `EnvironmentFile`, `ExecStart` 경로(기본 `/opt/flow-task`)를 실제 환경에 맞게 수정하세요. 의존성 설치(`uv sync`)와 `.env` 설정은 미리 끝나 있어야 합니다.
 
 ```bash
 # 시작 전 DB 마이그레이션
 uv run alembic upgrade head
 
-sudo cp deploy/systemd/flow-tarsk.service /etc/systemd/system/
+sudo cp deploy/systemd/flow-task.service /etc/systemd/system/
 sudo systemctl daemon-reload
-sudo systemctl enable --now flow-tarsk
+sudo systemctl enable --now flow-task
 
-systemctl status flow-tarsk
-journalctl -u flow-tarsk -f
+systemctl status flow-task
+journalctl -u flow-task -f
 curl http://127.0.0.1:8000/health   # HOST/PORT에 맞게 변경
 ```
 
@@ -95,7 +95,7 @@ uv run mypy src                    # 타입 검사
 
 ### E2E 테스트
 
-서버를 먼저 실행한 뒤(`uv run flow-tarsk`) 실행합니다. 다른 주소는 `BASE_URL`로 지정합니다.
+서버를 먼저 실행한 뒤(`uv run flow-task`) 실행합니다. 다른 주소는 `BASE_URL`로 지정합니다.
 
 ```bash
 cd e2e && npm ci && npx playwright install chromium && npx playwright test
@@ -135,7 +135,7 @@ DB_PASSWORD='비밀번호' scripts/backup.sh
 `crontab -e`에 아래 줄을 추가합니다. 비밀번호는 crontab에 직접 쓰지 말고 환경 파일에서 읽는 방식을 권장합니다.
 
 ```cron
-30 3 * * * cd /절대경로/flow-tarsk && DB_PASSWORD="$(cat $HOME/.config/flow-tarsk/db_password)" scripts/backup.sh >> /tmp/flow-tarsk-backup.log 2>&1
+30 3 * * * cd /절대경로/flow-task && DB_PASSWORD="$(cat $HOME/.config/flow-task/db_password)" scripts/backup.sh >> /tmp/flow-task-backup.log 2>&1
 ```
 
 ### 복원
@@ -150,16 +150,16 @@ DB_PASSWORD='비밀번호' scripts/restore.sh backups/taskflow-20261013-033000.s
 
 ## 소프트 삭제 데이터 영구 삭제
 
-삭제된 할 일은 30일 동안 소프트 삭제 상태로 남고, 이후 `flow-tarsk-purge` 명령으로 영구 삭제합니다.
+삭제된 할 일은 30일 동안 소프트 삭제 상태로 남고, 이후 `flow-task-purge` 명령으로 영구 삭제합니다.
 
 ```bash
-uv run flow-tarsk-purge
+uv run flow-task-purge
 ```
 
 주기적으로 실행하려면 cron에 등록하세요 (예: 매일 새벽 4시):
 
 ```cron
-0 4 * * * cd /절대경로/flow-tarsk && uv run flow-tarsk-purge >> /tmp/flow-tarsk-purge.log 2>&1
+0 4 * * * cd /절대경로/flow-task && uv run flow-task-purge >> /tmp/flow-task-purge.log 2>&1
 ```
 
 ## 키보드 단축키
@@ -173,7 +173,7 @@ uv run flow-tarsk-purge
 ## 프로젝트 구조
 
 ```
-src/flow_tarsk/
+src/flow_task/
 ├── main.py              # FastAPI 앱 생성, 라우터 등록
 ├── core/                # 설정, 예외 처리
 ├── db/                  # 엔진·세션, Base 모델
