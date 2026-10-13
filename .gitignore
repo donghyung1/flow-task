@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Tooling caches / coverage
+.mypy_cache/
+.ruff_cache/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Local DB backups
+backups/
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store
+
+# E2E
+e2e/node_modules/
+e2e/test-results/
+e2e/playwright-report/
