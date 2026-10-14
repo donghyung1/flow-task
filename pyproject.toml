@@ -26,6 +26,9 @@ flow-task-purge = "flow_task.purge:main"
 requires = ["uv_build>=0.13.0,<0.14.0"]
 build-backend = "uv_build"
 
+[tool.uv.build-backend]
+module-root = "backend"
+
 [dependency-groups]
 dev = [
     "httpx>=0.28.1",
@@ -37,7 +40,7 @@ dev = [
 [tool.ruff]
 line-length = 100
 target-version = "py314"
-src = ["src"]
+src = ["backend"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM", "ASYNC"]
@@ -47,4 +50,4 @@ ignore = ["B008"]
 python_version = "3.14"
 strict = true
 plugins = ["pydantic.mypy"]
-files = ["src"]
+files = ["backend"]

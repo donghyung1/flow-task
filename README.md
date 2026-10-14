@@ -173,7 +173,7 @@ uv run flow-task-purge
 ## 프로젝트 구조
 
 ```
-src/flow_task/
+backend/flow_task/       # 백엔드 (FastAPI)
 ├── main.py              # FastAPI 앱 생성, 라우터 등록
 ├── core/                # 설정, 예외 처리
 ├── db/                  # 엔진·세션, Base 모델
@@ -181,18 +181,18 @@ src/flow_task/
 ├── schemas/             # Pydantic 요청/응답 스키마
 ├── repositories/        # DB 쿼리
 ├── services/            # 비즈니스 로직
-├── api/v1/              # 라우터 (tasks, projects, tags, views)
-└── static/              # 웹 프론트엔드 (빌드 과정 없음)
-    ├── index.html       # SPA 진입점 (/app/* 경로 모두 이 파일로 응답)
-    ├── css/
-    │   ├── base.css     # 리셋, CSS 변수(라이트/다크 테마)
-    │   └── app.css      # 레이아웃, 컴포넌트
-    └── js/
-        ├── main.js      # 앱 초기화, 라우터
-        ├── api.js       # fetch 래퍼, 에러 처리
-        ├── state.js     # 간단한 전역 상태 저장소
-        ├── views/       # 화면별 렌더링 (today, project, stats ...)
-        └── components/  # 재사용 UI (task-item, modal, toast ...)
+└── api/v1/              # 라우터 (tasks, projects, tags, views)
+frontend/                # 웹 프론트엔드 (빌드 과정 없음, /static 으로 서빙)
+├── index.html           # SPA 진입점 (/app/* 경로 모두 이 파일로 응답)
+├── css/
+│   ├── base.css         # 리셋, CSS 변수(라이트/다크 테마)
+│   └── app.css          # 레이아웃, 컴포넌트
+└── js/
+    ├── main.js          # 앱 초기화, 라우터
+    ├── api.js           # fetch 래퍼, 에러 처리
+    ├── state.js         # 간단한 전역 상태 저장소
+    ├── views/           # 화면별 렌더링 (today, project, stats ...)
+    └── components/      # 재사용 UI (task-item, modal, toast ...)
 alembic/                 # 마이그레이션
 tests/
 docs/                    # PRD, API 계약

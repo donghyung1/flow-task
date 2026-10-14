@@ -16,7 +16,7 @@ from flow_task.core.errors import AppError, install_handlers
 from flow_task.core.logging import setup_logging
 from flow_task.db.session import get_engine
 
-STATIC_DIR = Path(__file__).parent / "static"
+STATIC_DIR = Path(__file__).resolve().parents[2] / "frontend"
 CSP = (
     "default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; "
     "object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
